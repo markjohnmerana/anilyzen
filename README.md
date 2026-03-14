@@ -1,79 +1,16 @@
-# AniLyzen 🦞
+# React + Vite
 
-> Real-time crayfish pond monitoring SaaS — IoT sensor analytics dashboard.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-A full-stack SaaS application that monitors crayfish pond health using IoT 
-sensors. Built as a featured portfolio project combining data engineering, 
-software engineering, and cloud engineering.
+Currently, two official plugins are available:
 
-## Architecture
-```
-Sensor / Simulator
-       ↓
-  FastAPI Backend
-       ↓
-  Supabase (PostgreSQL)
-       ↓
-  React Dashboard + Email Alerts
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Tech Stack
+## React Compiler
 
-| Layer | Technology |
-|---|---|
-| Backend | FastAPI (Python) |
-| Database | Supabase (PostgreSQL) |
-| Frontend | React + Apache ECharts |
-| Auth | Supabase Auth |
-| Alerts | Gmail SMTP |
-| Hosting | Vercel (frontend) · Railway (backend) |
-| Hardware (v2) | ESP32 + IoT sensors |
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Sensors Monitored
+## Expanding the ESLint configuration
 
-- Temperature (°C)
-- pH level
-- Dissolved oxygen (mg/L)
-- Turbidity (NTU)
-- Water level (cm)
-
-## Features (v1)
-
-- [x] Real-time sensor data ingestion
-- [x] Automated alert detection
-- [x] Email notifications for out-of-range values
-- [x] REST API with auto-generated docs
-- [ ] React dashboard (in progress)
-- [ ] Supabase Auth login
-- [ ] Hardware integration (v2)
-
-## Running Locally
-```bash
-# Backend
-cd backend
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-
-# Simulator
-python simulator/sensor_simulator.py
-```
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/` | App info |
-| GET | `/health` | Health check |
-| POST | `/api/v1/sensor-data` | Ingest sensor reading |
-| GET | `/api/v1/readings` | Get latest readings |
-| GET | `/api/v1/alerts` | Get latest alerts |
-
-## Project Status
-
-🚧 Active development — v1 (backend complete, dashboard in progress)
-
----
-
-Built by [ Mark John Merana] · Featured portfolio project
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
