@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.models.sensor import SensorReading
 from app.core.database import supabase
+from app.core.alerts import check_and_save_alerts
 
 router = APIRouter()
 
@@ -12,6 +13,9 @@ def receive_sensor_data(reading: SensorReading):
         data["timestamp"] = data["timestamp"].isoformat()
 
         response = supabase.table("sensor_readings").insert(data).execute()
+
+        # Check and save alerts
+        triggered_alerts = check_and_save_alerts(data)
 
         return {
             "status":  "success",
@@ -29,6 +33,25 @@ def get_readings(limit: int = 20):
     try:
         response = (
             supabase.table("sensor_readings")
+            .select("*")
+            .order("timestamp", desc=True)
+            .limit(limit)
+            .execute()
+        )
+        return {
+            "status": "success",
+            "data":   response.data
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/alerts")
+def get_alerts(limit: int = 20):
+    """Return the latest alerts."""
+    try:
+        response = (
+            supabase.table("alerts")
             .select("*")
             .order("timestamp", desc=True)
             .limit(limit)

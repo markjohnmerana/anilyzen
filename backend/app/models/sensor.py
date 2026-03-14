@@ -10,3 +10,10 @@ class SensorReading(BaseModel):
     oxygen:      Optional[float] = None
     turbidity:   Optional[float] = None
     water_level: Optional[float] = None
+
+class Alert(BaseModel):
+    device_id: str
+    sensor:    str
+    message:   str
+    value:     float
+    timestamp: datetime
