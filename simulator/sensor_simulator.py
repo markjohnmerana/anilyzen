@@ -1,7 +1,10 @@
 import random
 import time
 import json
+import requests
 from datetime import datetime, timezone
+
+API_URL = "http://127.0.0.1:8000/api/v1/sensor-data"
 
 # --- Sensor value ranges ---
 # Based on healthy crayfish pond conditions
@@ -45,26 +48,50 @@ def check_alerts(reading):
 
     return alerts
 
+def send_reading(reading):
+    """Send one reading to the FastAPI backend."""
+    try:
+        response = requests.post(API_URL, json=reading, timeout=5)
+
+        if response.status_code == 200:
+            print(f"✓ Saved to Supabase")
+        else:
+            print(f"✗ API error {response.status_code}: {response.text}")
+
+    except requests.exceptions.ConnectionError:
+        print("✗ Cannot connect to API — is the FastAPI server running?")
+    except requests.exceptions.Timeout:
+        print("✗ Request timed out")
+
 def run_simulator(interval_seconds=3):
     """Run the simulator continuously."""
     print("Anilyzen Sensor Simulator running...")
-    print(f"Device: {DEVICE_ID}")
+    print(f"Device  : {DEVICE_ID}")
+    print(f"Endpoint: {API_URL}")
     print(f"Interval: every {interval_seconds} seconds")
     print("-" * 45)
-
+    
+    count = 0 
+    
     while True:
+        count += 1 
         reading = generate_reading()
 
         # Print the reading as formatted JSON
+        print(f"Reading #{count}")
         print(json.dumps(reading, indent=2))
 
         # Check and print any alerts
         alerts = check_alerts(reading)
         for alert in alerts:
             print(f"⚠  {alert}")
-
+        
+        send_reading(reading)
         print("-" * 45)
         time.sleep(interval_seconds)
 
 if __name__ == "__main__":
-    run_simulator()
+    run_simulator() 
+
+
+
