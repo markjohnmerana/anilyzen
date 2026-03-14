@@ -1,15 +1,16 @@
 import { useSensorData } from '../hooks/useSensorData'
 import SensorCard from '../components/SensorCard'
+import ChartsSection from '../components/ChartsSection'
 import AlertsPanel from '../components/AlertsPanel'
 
 function Dashboard() {
-  const { latest, alerts, loading, error } = useSensorData(3000)
+  const { readings, latest, alerts, loading, error } = useSensorData(3000)
 
   const styles = {
     page: {
-      padding:   '2rem',
-      maxWidth:  '1100px',
-      margin:    '0 auto',
+      padding:  '2rem',
+      maxWidth: '1100px',
+      margin:   '0 auto',
     },
     header: {
       marginBottom: '2rem',
@@ -34,9 +35,9 @@ function Dashboard() {
       animation:    'pulse 2s infinite',
     },
     cardsRow: {
-      display:  'flex',
-      flexWrap: 'wrap',
-      gap:      '1rem',
+      display:      'flex',
+      flexWrap:     'wrap',
+      gap:          '1rem',
       marginBottom: '2rem',
     },
     error: {
@@ -48,9 +49,17 @@ function Dashboard() {
       marginBottom: '1rem',
     },
     timestamp: {
-      fontSize: '0.75rem',
-      color:    'var(--text-muted)',
+      fontSize:     '0.75rem',
+      color:        'var(--text-muted)',
       marginBottom: '1rem',
+    },
+    sectionTitle: {
+      fontSize:      '0.75rem',
+      color:         'var(--text-muted)',
+      textTransform: 'uppercase',
+      letterSpacing: '0.08em',
+      marginBottom:  '1rem',
+      marginTop:     '2rem',
     }
   }
 
@@ -68,21 +77,17 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Error state */}
-      {error && (
-        <div style={styles.error}>
-          {error}
-        </div>
-      )}
+      {/* Error */}
+      {error && <div style={styles.error}>{error}</div>}
 
-      {/* Loading state */}
+      {/* Loading */}
       {loading && (
         <div style={{ color: 'var(--text-muted)' }}>
           Loading sensor data...
         </div>
       )}
 
-      {/* Latest timestamp */}
+      {/* Timestamp */}
       {latest && (
         <div style={styles.timestamp}>
           Last reading: {new Date(latest.timestamp).toLocaleString()}
@@ -91,41 +96,53 @@ function Dashboard() {
 
       {/* Sensor cards */}
       {latest && (
-        <div style={styles.cardsRow}>
-          <SensorCard
-            label="Temperature"
-            value={latest.temperature}
-            unit="°C"
-            max={29}
-          />
-          <SensorCard
-            label="pH Level"
-            value={latest.ph}
-            unit="pH"
-            min={6.5}
-            max={8.5}
-          />
-          <SensorCard
-            label="Dissolved O₂"
-            value={latest.oxygen}
-            unit="mg/L"
-            min={5}
-          />
-          <SensorCard
-            label="Turbidity"
-            value={latest.turbidity}
-            unit="NTU"
-          />
-          <SensorCard
-            label="Water Level"
-            value={latest.water_level}
-            unit="cm"
-            min={32}
-          />
-        </div>
+        <>
+          <div style={styles.sectionTitle}>Current readings</div>
+          <div style={styles.cardsRow}>
+            <SensorCard
+              label="Temperature"
+              value={latest.temperature}
+              unit="°C"
+              max={29}
+            />
+            <SensorCard
+              label="pH Level"
+              value={latest.ph}
+              unit="pH"
+              min={6.5}
+              max={8.5}
+            />
+            <SensorCard
+              label="Dissolved O₂"
+              value={latest.oxygen}
+              unit="mg/L"
+              min={5}
+            />
+            <SensorCard
+              label="Turbidity"
+              value={latest.turbidity}
+              unit="NTU"
+            />
+            <SensorCard
+              label="Water Level"
+              value={latest.water_level}
+              unit="cm"
+              min={32}
+            />
+          </div>
+        </>
       )}
 
-      {/* Alerts panel */}
+      {/* All sensor charts */}
+      {readings.length > 0 && (
+        <>
+          <div style={styles.sectionTitle}>Sensor history</div>
+          <ChartsSection readings={readings} />
+        </>
+      )}
+
+      {/* Alerts */}
+      <div style={styles.sectionTitle}>Recent alerts</div>
       <AlertsPanel alerts={alerts} />
 
     </div>
