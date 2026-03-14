@@ -2,6 +2,7 @@ import { useSensorData } from '../hooks/useSensorData'
 import SensorCard from '../components/SensorCard'
 import ChartsSection from '../components/ChartsSection'
 import AlertsPanel from '../components/AlertsPanel'
+import WaterQualityCard from '../components/WaterQualityCard'
 
 function Dashboard() {
   const { readings, latest, alerts, loading, error } = useSensorData(3000)
@@ -35,10 +36,10 @@ function Dashboard() {
       animation:    'pulse 2s infinite',
     },
     cardsRow: {
-      display:      'flex',
-      flexWrap:     'wrap',
-      gap:          '1rem',
-      marginBottom: '2rem',
+    display:      'flex',
+    flexWrap:     'wrap',
+    gap:          '1rem',
+    marginBottom: '2rem',
     },
     error: {
       background:   '#ff4d4d22',
@@ -131,6 +132,14 @@ function Dashboard() {
             />
           </div>
         </>
+      )}
+
+         {/* Water quality score */}
+         {latest && (
+         <>
+            <div style={styles.sectionTitle}>Water quality score</div>
+            <WaterQualityCard reading={latest} />
+         </>
       )}
 
       {/* All sensor charts */}

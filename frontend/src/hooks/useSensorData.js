@@ -1,12 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getReadings, getAlerts } from '../api/sensors'
 
 export function useSensorData(refreshInterval = 3000) {
-  const [readings, setReadings]   = useState([])
-  const [alerts, setAlerts]       = useState([])
-  const [latest, setLatest]       = useState(null)
-  const [loading, setLoading]     = useState(true)
-  const [error, setError]         = useState(null)
+  const [readings, setReadings] = useState([])
+  const [alerts, setAlerts]     = useState([])
+  const [latest, setLatest]     = useState(null)
+  const [loading, setLoading]   = useState(true)
+  const [error, setError]       = useState(null)
+
+  // Keep previous values during refetch — prevents flicker
+  const prevLatest   = useRef(null)
+  const prevReadings = useRef([])
 
   const fetchData = async () => {
     try {
@@ -16,12 +20,24 @@ export function useSensorData(refreshInterval = 3000) {
       ])
 
       const readingList = readingsRes.data || []
-      setReadings(readingList)
-      setLatest(readingList[0] || null)
+
+      // Only update if we actually got data
+      if (readingList.length > 0) {
+        prevLatest.current   = readingList[0]
+        prevReadings.current = readingList
+        setLatest(readingList[0])
+        setReadings(readingList)
+      }
+
       setAlerts(alertsRes.data || [])
       setError(null)
     } catch (err) {
       setError('Cannot connect to API — is the backend running?')
+      // Keep showing previous data on error
+      if (prevLatest.current) {
+        setLatest(prevLatest.current)
+        setReadings(prevReadings.current)
+      }
     } finally {
       setLoading(false)
     }
