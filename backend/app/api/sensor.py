@@ -2,12 +2,13 @@ from fastapi import APIRouter, HTTPException
 from app.models.sensor import SensorReading
 from app.core.database import supabase
 from app.core.alerts import check_and_save_alerts
+from app.core.email_service import send_alert_email
 
 router = APIRouter()
 
 @router.post("/sensor-data")
 def receive_sensor_data(reading: SensorReading):
-    """Receive one sensor reading and save it to Supabase."""
+    """Receive one sensor reading and save it, check alerts, send email if needed."""
     try:
         data = reading.model_dump()
         data["timestamp"] = data["timestamp"].isoformat()
@@ -17,10 +18,15 @@ def receive_sensor_data(reading: SensorReading):
         # Check and save alerts
         triggered_alerts = check_and_save_alerts(data)
 
+        # Send email if any alerts triggered
+        if triggered_alerts:
+            send_alert_email(triggered_alerts)
+
         return {
             "status":  "success",
             "message": "Reading saved",
-            "data":    response.data
+            "data":    response.data,
+            "alerts":  triggered_alerts
         }
 
     except Exception as e:
