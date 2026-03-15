@@ -2,9 +2,10 @@ import { calculateWaterQuality } from '../utils/waterQuality'
 import { useSensorData }   from '../hooks/useSensorData'
 import SensorCard          from '../components/SensorCard'
 import WaterQualityCard    from '../components/WaterQualityCard'
+import { useSensor } from '../context/SensorContext'
 
 function Dashboard() {
-  const { readings, latest, alerts, loading, error } = useSensorData(3000)
+  const { readings, latest, alerts, loading, error } = useSensor()
 
   const previous = readings.length > 1 ? readings[1] : null
 

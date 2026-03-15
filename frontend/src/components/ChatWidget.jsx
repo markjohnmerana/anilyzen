@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { chatWithAnilyzen } from '../api/gemini'
 import { useSensorData }    from '../hooks/useSensorData'
+import { useSensor } from '../context/SensorContext'
 
 const SUGGESTED = [
   'Is my pond healthy right now?',
@@ -10,7 +11,7 @@ const SUGGESTED = [
 ]
 
 function ChatWidget() {
-  const { latest }                      = useSensorData(3000)
+  const { latest }                      = useSensor()
   const [open, setOpen]                 = useState(false)
   const [messages, setMessages]         = useState([
     {

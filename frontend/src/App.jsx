@@ -8,17 +8,25 @@ import AIInsights      from './pages/AIInsights'
 import History         from './pages/History'
 import Login           from './pages/Login'
 import { useAuth }         from './hooks/useAuth'
-import { useSensorData }   from './hooks/useSensorData'
 import { useDeviceStatus } from './hooks/useDeviceStatus'
+import { SensorProvider, useSensor } from './context/SensorContext'
+
+function NavBar() {
+  const { latest } = useSensor()
+  const isOnline   = useDeviceStatus(latest, 10)
+  const { user }   = useAuth()
+
+  if (!user) return null
+
+  return <Navbar isOnline={isOnline} lastSeen={latest?.timestamp} />
+}
 
 function AppShell() {
-  const { user }   = useAuth()
-  const { latest } = useSensorData(3000)
-  const isOnline   = useDeviceStatus(latest, 10)
+  const { user } = useAuth()
 
   return (
-    <>
-      {user && <Navbar isOnline={isOnline} lastSeen={latest?.timestamp} />}
+    <SensorProvider>
+      <NavBar />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={
@@ -34,7 +42,7 @@ function AppShell() {
       </Routes>
       {user && <BottomNav />}
       {user && <ChatWidget />}
-    </>
+    </SensorProvider>
   )
 }
 

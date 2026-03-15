@@ -164,10 +164,10 @@ function Login() {
       }}>
         {/* Logo */}
         <div style={{fontSize:'1.5rem',fontWeight:'700',color:'#e2e8f0',textAlign:'center',marginBottom:'0.25rem'}}>
-          <span style={{color:'#00c896'}}>Ani</span>lyzen
+          <span style={{color:'#00c896'}}>Ani</span>Lyzen
         </div>
         <div style={{fontSize:'0.82rem',color:'#8892a4',textAlign:'center',marginBottom:'2rem'}}>
-          Crayfish pond monitoring platform
+          Crayfish Monitoring Platform
         </div>
 
         {/* Error */}
@@ -213,7 +213,7 @@ function Login() {
         </form>
 
         <div style={{textAlign:'center',color:'#8892a4',fontSize:'0.72rem',marginTop:'1.5rem',borderTop:'1px solid #2a3040',paddingTop:'1rem'}}>
-          v0.1.0 · Private access
+          v0.1.5  · Private access
         </div>
       </div>
     </div>

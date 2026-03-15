@@ -149,7 +149,7 @@ function Navbar({ isOnline, lastSeen }) {
         <div style={styles.logo}>
           <span style={styles.logoAccent}>Ani</span>Lyzen
         </div>
-        <span style={styles.version}>v0.1.0</span>
+        <span style={styles.version}>v0.1.5</span>
       </div>
 
       {/* Center — device status */}

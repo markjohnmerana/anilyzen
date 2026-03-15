@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSensorData } from '../hooks/useSensorData'
 import { analyzePond }   from '../api/gemini'
+import { useSensor } from '../context/SensorContext'
 
 const STATUS_COLORS = {
   Excellent: '#00c896',
@@ -62,7 +63,7 @@ function SectionTitle({ children }) {
 }
 
 function AIInsights() {
-  const { latest, readings } = useSensorData(3000)
+  const { latest, readings } = useSensor()
   const [result,  setResult]  = useState(null)
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState(null)

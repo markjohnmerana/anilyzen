@@ -1,9 +1,10 @@
 import { useSensorData } from '../hooks/useSensorData'
 import ChartsSection     from '../components/ChartsSection'
 import AlertsPanel       from '../components/AlertsPanel'
+import { useSensor } from '../context/SensorContext'
 
 function History() {
-  const { readings, alerts, loading } = useSensorData(3000)
+  const { readings, alerts, loading } = useSensor()
 
   const styles = {
     page: {
