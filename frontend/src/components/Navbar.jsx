@@ -147,7 +147,7 @@ function Navbar({ isOnline, lastSeen }) {
       {/* Left — logo */}
       <div style={styles.left}>
         <div style={styles.logo}>
-          <span style={styles.logoAccent}>Ani</span>lyzen
+          <span style={styles.logoAccent}>Ani</span>Lyzen
         </div>
         <span style={styles.version}>v0.1.0</span>
       </div>
