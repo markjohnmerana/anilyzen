@@ -19,12 +19,8 @@ function AppShell() {
   return (
     <>
       {user && <Navbar isOnline={isOnline} lastSeen={latest?.timestamp} />}
-
       <Routes>
-        {/* Public route */}
         <Route path="/login" element={<Login />} />
-
-        {/* Protected routes */}
         <Route path="/dashboard" element={
           <ProtectedRoute><Dashboard /></ProtectedRoute>
         }/>
@@ -34,11 +30,8 @@ function AppShell() {
         <Route path="/history" element={
           <ProtectedRoute><History /></ProtectedRoute>
         }/>
-
-        {/* Default */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
-
       {user && <BottomNav />}
       {user && <ChatWidget />}
     </>
