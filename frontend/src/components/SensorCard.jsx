@@ -10,14 +10,14 @@ function SensorCard({ label, value, unit, min, max, decimals = 2 }) {
   const status = getStatus()
 
   const styles = {
-    card: {
-     background:   'var(--bg-card)',
-     border:       `1px solid ${status === 'danger' ? '#ff4d4d' : '#2a3040'}`,
-     borderRadius: '12px',
-     padding:      '1rem',
-     flex:         '1 1 120px',   // was 160px
-     minWidth:     '100px',       // was 140px
-    maxWidth:     '200px',       // was 220px
+     card: {
+      background:   'var(--bg-card)',
+      border:       `1px solid ${status === 'danger' ? '#ff4d4d' : '#2a3040'}`,
+      borderRadius: '12px',
+      padding:      '1rem',
+      //flex:         '1 1 calc(50% - 0.75rem)',
+      //minWidth:     '140px'
+      minWidth:     '100%'
     },
     label: {
       fontSize:      '0.72rem',
