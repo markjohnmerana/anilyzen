@@ -2,10 +2,14 @@ import random
 import time
 import json
 import requests
+import os
 from datetime import datetime, timezone
 
-API_URL = "http://127.0.0.1:8000/api/v1/sensor-data"
-
+# Uses environment variable in production, local in development
+API_URL = os.getenv(
+    "API_URL",
+    "http://127.0.0.1:8000/api/v1/sensor-data"
+)
 # --- Sensor value ranges ---
 # Based on healthy crayfish pond conditions
 SENSOR_RANGES = {
