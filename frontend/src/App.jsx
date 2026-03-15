@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Navbar     from './components/Navbar'
-import BottomNav  from './components/BottomNav'
-import Dashboard  from './pages/Dashboard'
-import AIInsights from './pages/AIInsights'
-import History    from './pages/History'
-import Login      from './pages/Login'
+import Navbar      from './components/Navbar'
+import BottomNav   from './components/BottomNav'
+import ChatWidget  from './components/ChatWidget'
+import Dashboard   from './pages/Dashboard'
+import AIInsights  from './pages/AIInsights'
+import History     from './pages/History'
+import Login       from './pages/Login'
 import { useSensorData }   from './hooks/useSensorData'
 import { useDeviceStatus } from './hooks/useDeviceStatus'
 
@@ -23,6 +24,7 @@ function AppLayout() {
         <Route path="/login"     element={<Login />} />
       </Routes>
       <BottomNav />
+      <ChatWidget />
     </>
   )
 }

@@ -1,4 +1,4 @@
-console.log('Gemini key:', import.meta.env.VITE_GEMINI_API_KEY)
+
 
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
@@ -57,4 +57,48 @@ Respond with ONLY the JSON. No markdown, no backticks, no extra text.
   const text     = result.response.text()
   const cleaned  = text.replace(/```json|```/g, '').trim()
   return JSON.parse(cleaned)
+}
+
+export async function chatWithAnilyzen(messages, latest) {
+
+  const context = latest ? `
+Current pond sensor readings:
+- Temperature:      ${latest.temperature}°C   (safe: 24–29°C)
+- pH:               ${latest.ph}              (safe: 6.5–8.5)
+- Dissolved Oxygen: ${latest.oxygen} mg/L     (safe: ≥5.0)
+- Turbidity:        ${latest.turbidity} NTU   (safe: ≤8 NTU)
+- Water Level:      ${latest.water_level} cm  (safe: 32–58 cm)
+` : 'No live sensor data available.'
+
+  const systemPrompt = `You are Anilyzen AI — an expert aquaculture assistant specializing in crayfish pond management. You have access to live pond data: ${context} Give concise, practical advice. Reference the sensor values when relevant. You created by Mark John Merana for his crayfish pond in Infanta`
+
+  // Build history excluding the last message
+  const history = []
+
+  // Inject system context as first exchange
+  history.push({
+    role:  'user',
+    parts: [{ text: systemPrompt }],
+  })
+  history.push({
+    role:  'model',
+    parts: [{ text: 'Understood! I am ready to help with your crayfish pond. I can see your live sensor data.' }],
+  })
+
+  // Add conversation history
+  messages.slice(1, -1).forEach(msg => {
+    history.push({
+      role:  msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.content }],
+    })
+  })
+
+  const chat = model.startChat({
+    history,
+    generationConfig: { maxOutputTokens: 500 },
+  })
+
+  const lastMessage = messages[messages.length - 1].content
+  const result      = await chat.sendMessage(lastMessage)
+  return result.response.text()
 }
