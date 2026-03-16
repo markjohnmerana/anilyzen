@@ -98,7 +98,7 @@ function Dashboard() {
             </div>
             <div style={{flex:1}}>
               <div style={{fontSize:'0.9rem',fontWeight:'600',color:'#e2e8f0'}}>pond-sensor-001</div>
-              <div style={{fontSize:'0.75rem',color:'#8892a4',marginTop:'2px'}}>Majayjay, Laguna · Freshwater crayfish</div>
+              <div style={{fontSize:'0.75rem',color:'#8892a4',marginTop:'2px'}}>Infanta, Quezon · Freshwater crayfish</div>
             </div>
             <div style={{textAlign:'right'}}>
               <div style={{fontSize:'0.7rem',background:'#00c89620',color:'#00c896',padding:'3px 10px',borderRadius:'99px'}}>
