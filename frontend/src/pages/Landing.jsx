@@ -133,7 +133,7 @@ function Landing() {
             <span style={s.h1green}>Protect your crayfish.</span>
           </h1>
           <p style={s.heroSub}>
-            AniLyzen gives you real-time sensor data, AI-powered health analysis,
+            <span style={{color:'#00c896'}}>Ani</span> means harvest in Filipino, Lyze from analyze used in data analytics. <span style={{color:'#00c896'}}>Ani</span>Lyzen gives you real-time sensor data, AI-powered health analysis,
             and instant alerts — so your crayfish pond stays healthy 24/7.
           </p>
           <div style={s.btnRow}>
@@ -192,7 +192,8 @@ function Landing() {
             Built for crayfish farmers
           </div>
           <p style={{fontSize:'0.9rem',color:'#8892a4',lineHeight:1.8,marginBottom:'1.5rem'}}>
-            Anilyzen was built from scratch as a real-world IoT monitoring solution for freshwater crayfish aquaculture in Infanta, Quezon. It combines data engineering, software engineering, cloud infrastructure, and AI — all running on a ₱0 budget using free-tier services.
+             <strong style={{color:'#00c896'}}>Ani</strong> is the Filipino word for harvest.
+             <strong style={{color:'#00c896'}}> Lyze</strong> comes from analyze — the data analytics behind every reading. AniLyzen was built from scratch as a real-world IoT monitoring solution for my hobby, a freshwater crayfish aquaculture in Infanta, Quezon Philippines.
           </p>
           <div style={{display:'flex',gap:'0.75rem',justifyContent:'center',flexWrap:'wrap'}}>
             {['FastAPI','Supabase','React','Gemini AI','Railway','Vercel'].map((t,i) => (
