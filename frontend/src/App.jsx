@@ -10,6 +10,7 @@ import Login           from './pages/Login'
 import { useAuth }         from './hooks/useAuth'
 import { useDeviceStatus } from './hooks/useDeviceStatus'
 import { SensorProvider, useSensor } from './context/SensorContext'
+import Landing from './pages/Landing'
 
 function NavBar() {
   const { latest } = useSensor()
@@ -28,6 +29,7 @@ function AppShell() {
     <SensorProvider>
       <NavBar />
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={
           <ProtectedRoute><Dashboard /></ProtectedRoute>
@@ -38,7 +40,6 @@ function AppShell() {
         <Route path="/history" element={
           <ProtectedRoute><History /></ProtectedRoute>
         }/>
-        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
       {user && <BottomNav />}
       {user && <ChatWidget />}
